@@ -53,7 +53,7 @@ for i in range(1, len(albumLength)+1):
         driver.find_element(By.XPATH, xp_s).click()
         time.sleep(1)
 
-        # 가사가 없을 때 처리
+        #가사가 없을 때 처리
         try:
             lyricsBox = driver.find_element(By.ID, 'd_video_summary')
             lyric = lyricsBox.text.replace('\n', ' / ') if lyricsBox else "가사 준비중"
