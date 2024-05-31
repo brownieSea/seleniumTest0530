@@ -14,7 +14,6 @@ opt.add_experimental_option('detach', True)  # 브라우저 꺼짐 방지
 # 검색어 input
 singer = input("가수명 : ")
 
-
 url = "https://www.melon.com/index.htm"
 # 크롬 드라이브 개체 생성
 driver = Chrome(options=opt)  # 옵션 설정.
@@ -53,11 +52,18 @@ for i in range(1, len(albumLength)+1):
         driver.find_element(By.XPATH, xp_s).click()
         time.sleep(1)
 
-        #가사가 없을 때 처리
-        try:
-            lyricsBox = driver.find_element(By.ID, 'd_video_summary')
-            lyric = lyricsBox.text.replace('\n', ' / ') if lyricsBox else "가사 준비중"
-        except:
+        #가사가 없을 때 처리 - 예외처리 방식
+        # try:
+        #     lyricsBox = driver.find_element(By.ID, 'd_video_summary')
+        #     lyric = lyricsBox.text.replace('\n', ' / ') if lyricsBox else "가사 준비중"
+        # except:
+        #     lyric = "가사 준비중"
+
+        # 가사가 없을 때 처리 - if 문
+        lyricsBox = driver.find_elements(By.ID, 'd_video_summary')
+        if lyricsBox:       # 리스트에 하나라도 요소가 있으면, True
+            lyric = lyricsBox[0].text.replace('\n', ' / ')
+        else:               # 리스트에 요소가 없으면, False
             lyric = "가사 준비중"
 
         lyrics.append(lyric)
